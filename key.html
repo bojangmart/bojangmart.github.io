@@ -52,5 +52,40 @@ img.key{width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 2px
 
   <p class="fine">기준일 2026-11-14 · 보장마트</p>
 </div>
+
+<style>
+#iabSheet{position:fixed;inset:0;z-index:9999;background:rgba(20,20,24,.55);display:none;align-items:flex-end;justify-content:center}
+#iabSheet.on{display:flex}
+#iabSheet .bx{width:100%;max-width:440px;background:#fffaf0;border-radius:20px 20px 0 0;padding:22px 20px 26px;box-shadow:0 -6px 24px rgba(0,0,0,.18);font-family:inherit;color:#222}
+#iabSheet .ok{font-size:13px;font-weight:700;color:#1f8a4c;margin-bottom:6px}
+#iabSheet h3{margin:0 0 12px;font-size:19px;line-height:1.35;word-break:keep-all}
+#iabSheet ol{margin:0 0 16px;padding-left:20px;font-size:15px;line-height:1.6;word-break:keep-all}
+#iabSheet ol b{background:#ffe08a;padding:0 3px;border-radius:3px}
+#iabSheet .x{display:block;width:100%;border:0;border-radius:12px;background:#222;color:#fff;font-size:16px;font-weight:700;padding:14px;margin-bottom:8px;font-family:inherit}
+#iabSheet .alt{display:block;text-align:center;font-size:13px;color:#777;text-decoration:underline;padding:6px}
+</style>
+<div id="iabSheet" role="dialog" aria-modal="true"><div class="bx">
+<div class="ok" id="iabOk">✓ 조건을 복사했어요</div>
+<h3>인스타 앱 안에서 바로 보낼 수 있어요</h3>
+<ol><li>화면 <b>왼쪽 위 ✕</b>를 눌러 이 창을 닫아요</li><li id="iabL2"><b>@bojangi.note</b> DM 창에 붙여넣고 보내요</li></ol>
+<button class="x" type="button" id="iabClose">알겠어요</button>
+<a class="alt" id="iabAlt" href="https://ig.me/m/bojangi.note">그래도 DM 창 열기 (새 창으로 열려요)</a>
+</div></div>
+<script>
+(function(){
+  var ua=navigator.userAgent||"";
+  if(!/Instagram|FBAN|FBAV/i.test(ua))return;
+  var sh=document.getElementById("iabSheet"),ok=document.getElementById("iabOk");
+  document.getElementById("iabClose").addEventListener("click",function(){sh.classList.remove("on")});
+  sh.addEventListener("click",function(e){if(e.target===sh)sh.classList.remove("on")});
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest("a[href*='ig.me/m/']");
+    if(!a||a.id==="iabAlt")return;
+    e.preventDefault();
+    var cp=(a.id==="realBtn");ok.style.display=cp?"block":"none";document.getElementById("iabL2").innerHTML=cp?"<b>@bojangi.note</b> DM 창에 붙여넣고 보내요":"<b>@bojangi.note</b> DM 창에 <b>점검</b>이라고 보내요";
+    sh.classList.add("on");
+  },false);
+})();
+</script>
 </body>
 </html>
